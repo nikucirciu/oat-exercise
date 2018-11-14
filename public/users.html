@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Users</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>
+			Users
+		</h1>
+		<table class="table table-striped" id="user-table">
+			<tr>
+				<th>
+					ID
+				</th>
+				<th>
+					Name
+				</th>
+			</tr>
+		</table>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		(function($) {
+			$.ajax({
+				url: '/v1/users?limit=50',
+				dataType: 'JSON',
+				success: function(data) {
+					let table = $('#user-table');
+					for(let i = 0, length = data.length; i < length; i++) {
+						table.append('<tr><td>' + data[i].id + '</td><td>' + data[i].firstName + ' ' + data[i].lastName + '</td></tr>');
+					}
+				},
+				error: function() {
+					alert('Could not load users');
+				}
+			});
+		})(jQuery);
+	</script>
+</body>
+</html>
